@@ -1,14 +1,14 @@
 <idea-plugin>
     <id>org.anilmisirlioglu.keystroke.idea-keystroke-counter</id>
     <name>Keystroke Counter</name>
-    <vendor email="misirlioglisamet@gmail.com" url="http://www.asena.xyz">Anıl Mısırlıoğlu</vendor>
+    <vendor email="misirlioglisamet@gmail.com" url="https://www.asena.xyz">Anıl Mısırlıoğlu</vendor>
 
     <description>Keystroke counter and statistics tool for JetBrains IDEs.</description>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.statistics.KeystrokeStatistics"/>
+        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.statistics.StatisticsService"/>
     </extensions>
 
     <actions>

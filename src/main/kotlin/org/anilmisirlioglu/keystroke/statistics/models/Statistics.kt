@@ -3,6 +3,7 @@ package org.anilmisirlioglu.keystroke.statistics.models
 import com.intellij.util.xmlb.annotations.*
 import org.anilmisirlioglu.keystroke.statistics.converters.LocalDateTimeConverter
 import java.time.LocalDateTime
+import kotlin.collections.HashMap
 
 data class Statistics(
     @Tag("version")
@@ -10,12 +11,6 @@ data class Statistics(
     @Tag("startAt")
     @OptionTag(converter = LocalDateTimeConverter::class)
     val startAt: LocalDateTime = LocalDateTime.now(),
-    @MapAnnotation(
-        surroundKeyWithTag = false,
-        surroundValueWithTag = false,
-        surroundWithTag = false,
-        entryTagName = "year",
-        keyAttributeName = "date"
-    )
-    val years: HashMap<Int, ArrayList<DayStatistic>> = hashMapOf(),
+    @Tag("years")
+    val years: HashMap<Int, HashMap<Int, Int>> = hashMapOf()
 )
