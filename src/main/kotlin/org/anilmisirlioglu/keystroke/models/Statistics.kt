@@ -1,7 +1,7 @@
-package org.anilmisirlioglu.keystroke.statistics.models
+package org.anilmisirlioglu.keystroke.models
 
 import com.intellij.util.xmlb.annotations.*
-import org.anilmisirlioglu.keystroke.statistics.converters.LocalDateTimeConverter
+import org.anilmisirlioglu.keystroke.converters.LocalDateTimeConverter
 import java.time.LocalDateTime
 import kotlin.collections.HashMap
 

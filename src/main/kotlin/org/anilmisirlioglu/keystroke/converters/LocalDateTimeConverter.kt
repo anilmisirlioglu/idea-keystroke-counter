@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke.statistics.converters
+package org.anilmisirlioglu.keystroke.converters
 
 import com.intellij.util.xmlb.Converter
 import java.time.Instant

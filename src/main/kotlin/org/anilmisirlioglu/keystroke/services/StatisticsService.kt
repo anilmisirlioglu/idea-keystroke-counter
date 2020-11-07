@@ -1,8 +1,10 @@
-package org.anilmisirlioglu.keystroke.statistics
+package org.anilmisirlioglu.keystroke.services
 
-import com.intellij.openapi.components.*
-import com.intellij.util.xmlb.XmlSerializerUtil
-import org.anilmisirlioglu.keystroke.statistics.models.Statistics
+import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.components.State
+import com.intellij.openapi.components.Storage
+import org.anilmisirlioglu.keystroke.models.Statistics
 import java.util.*
 
 @State(
@@ -42,7 +44,7 @@ class StatisticsService : PersistentStateComponent<Statistics>{
             val calendar = Calendar.getInstance()
 
             state.years[calendar.get(Calendar.YEAR)]?.run{
-                val day = calendar.get(Calendar.DAY_OF_YEAR) + 1
+                val day = calendar.get(Calendar.DAY_OF_YEAR)
                 when(val count = this[day]){
                     null -> this[day] = 1
                     else -> this[day] = count + 1
@@ -51,10 +53,15 @@ class StatisticsService : PersistentStateComponent<Statistics>{
         }
     }
 
-    // TODO::Not implemented
     fun reset(){
-        synchronized(state){}
-    }
+        synchronized(state){
+            state.years.apply{
+                val year = Calendar.getInstance().get(Calendar.YEAR)
 
+                this[year] = hashMapOf()
+                this[year + 1] = hashMapOf()
+            }
+        }
+    }
 
 }
