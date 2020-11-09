@@ -2,25 +2,25 @@ package org.anilmisirlioglu.keystroke.utils
 
 object BitMask{
 
-    fun has(rights: Int, permissions: Int): Boolean = (rights and permissions) == permissions
+    fun has(rights: Int, bits: Int): Boolean = (rights and bits) == bits
 
-    fun getBits(rights: Int, permissions: List<Int>): List<Int> = permissions.filter{ has(rights, it) }
+    fun getBits(rights: Int, bits: List<Int>): List<Int> = bits.filter{ has(rights, it) }
 
-    fun add(rights: Int, permissions: List<Int>): Int = this.add(rights, toInt(permissions))
+    fun add(rights: Int, bits: List<Int>): Int = this.add(rights, toInt(bits))
 
-    fun add(rights: Int, permissions: Int): Int = rights or permissions
+    fun add(rights: Int, bits: Int): Int = rights or bits
 
-    fun delete(rights: Int, permissions: List<Int>) = this.delete(rights, toInt(permissions))
+    fun delete(rights: Int, bits: List<Int>) = this.delete(rights, toInt(bits))
 
-    fun delete(rights: Int, permissions: Int) = rights xor permissions
+    fun delete(rights: Int, bits: Int) = rights xor bits
 
-    fun toInt(permissions: List<Int>): Int = permissions.reduce{ a, b -> a or b }
+    fun toInt(bits: List<Int>): Int = bits.reduce{ a, b -> a or b }
 
-    fun equal(permissions1: List<Int>, permissions2: List<Int>): Boolean = this.equal(
-        toInt(permissions1),
-        toInt(permissions2)
+    fun equal(bits1: List<Int>, bits2: List<Int>): Boolean = this.equal(
+        toInt(bits1),
+        toInt(bits2)
     )
 
-    fun equal(permissions1: Int, permissions2: Int): Boolean = permissions1 == permissions2
+    fun equal(bits1: Int, bits2: Int): Boolean = bits1 == bits2
 
 }
