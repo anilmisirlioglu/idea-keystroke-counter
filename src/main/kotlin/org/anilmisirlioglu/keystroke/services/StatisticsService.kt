@@ -10,7 +10,7 @@ import java.util.*
 @State(
     name = "KeystrokeStatistics",
     storages = [
-        Storage("keystrokes.xml")
+        Storage("keystroke.statistics.xml")
     ]
 )
 class StatisticsService : PersistentStateComponent<Statistics>{

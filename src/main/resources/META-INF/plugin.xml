@@ -13,12 +13,16 @@
         </component>
     </application-components>
 
-    <!--<applicationListeners>
-        <listener class="org.anilmisirlioglu.keystroke.KeyboardListener" topic="com.intellij.ide.IdeEventQueue$EventDispatcher"/>
-    </applicationListeners>-->
-
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.services.StatisticsService"/>
+
+        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.services.SettingsService"/>
+
+        <applicationConfigurable
+                id="KeyStrokeConfiguration"
+                displayName="Keystroke Counter"
+                instance="org.anilmisirlioglu.keystroke.KeystrokeConfiguration"
+                groupId="tools"/>
     </extensions>
 
     <actions>
