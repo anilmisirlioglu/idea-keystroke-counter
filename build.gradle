@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.10'
 }
 
+apply plugin: 'kotlin'
+
 group 'org.anilmisirlioglu.keystroke'
 version '1.0-SNAPSHOT'
 
@@ -11,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

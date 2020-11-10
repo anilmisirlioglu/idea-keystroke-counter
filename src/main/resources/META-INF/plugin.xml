@@ -21,7 +21,7 @@
         <applicationConfigurable
                 id="KeyStrokeConfiguration"
                 displayName="Keystroke Counter"
-                instance="org.anilmisirlioglu.keystroke.KeystrokeConfiguration"
+                instance="org.anilmisirlioglu.keystroke.SettingsConfigurable"
                 groupId="tools"/>
     </extensions>
 

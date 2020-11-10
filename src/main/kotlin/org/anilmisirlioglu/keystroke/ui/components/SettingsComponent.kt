@@ -2,6 +2,7 @@ package org.anilmisirlioglu.keystroke.ui.components
 
 import com.intellij.ui.TitledSeparator
 import com.intellij.util.ui.FormBuilder
+import org.anilmisirlioglu.keystroke.MessageBundle
 import org.anilmisirlioglu.keystroke.services.SettingsService
 import javax.swing.JCheckBox
 import javax.swing.JPanel
@@ -12,16 +13,30 @@ class SettingsComponent{
     private val settings = SettingsService.instance
 
     /* Titles */
-    private val generalTitledSeparator = TitledSeparator("General")
-    private val keyboardTitledSeparator = TitledSeparator("Keyboard")
+    private val generalTitledSeparator = TitledSeparator(
+        MessageBundle.message("settings.separator.general")
+    )
+    private val keyboardTitledSeparator = TitledSeparator(
+        MessageBundle.message("settings.separator.keyboard")
+    )
 
-    // TODO::Translate english
     /* Checkboxes */
-    private val countOnlyWorkspaceCheckbox = JCheckBox("Count keystrokes pressed only in the workspace")
-    private val allowFunctionKeysCheckbox = JCheckBox("Fonksiyon tuşlarının sayımına izin ver")
-    private val allowCursorControlKeysCheckbox = JCheckBox("İmleç kontrol tuşlarının sayımına izin ver")
-    private val allowOtherKeysCheckbox = JCheckBox("Diğer tuşların sayımına izin ver")
-    private val allowTypingKeysCheckbox = JCheckBox("Yazma tuşlarına izin ver", true).apply{
+    private val countOnlyWorkspaceCheckbox = JCheckBox(
+        MessageBundle.message("settings.checkbox.workspace")
+    )
+    private val allowFunctionKeysCheckbox = JCheckBox(
+        MessageBundle.message("settings.checkbox.keys.function")
+    )
+    private val allowCursorControlKeysCheckbox = JCheckBox(
+        MessageBundle.message("settings.checkbox.keys.cursor")
+    )
+    private val allowOtherKeysCheckbox = JCheckBox(
+        MessageBundle.message("settings.checkbox.keys.other")
+    )
+    private val allowTypingKeysCheckbox = JCheckBox(
+        MessageBundle.message("settings.checkbox.keys.typing"),
+        true
+    ).apply{
         isEnabled = false
     }
 

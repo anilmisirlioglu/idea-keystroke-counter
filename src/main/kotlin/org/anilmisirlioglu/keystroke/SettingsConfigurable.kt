@@ -5,7 +5,7 @@ import org.anilmisirlioglu.keystroke.ui.components.SettingsComponent
 import org.jetbrains.annotations.Nls
 import javax.swing.JComponent
 
-class KeystrokeConfiguration : SearchableConfigurable{
+class SettingsConfigurable : SearchableConfigurable{
 
     private val component: SettingsComponent = SettingsComponent()
 
