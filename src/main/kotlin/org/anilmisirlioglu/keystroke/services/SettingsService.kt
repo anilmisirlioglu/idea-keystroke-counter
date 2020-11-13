@@ -41,9 +41,9 @@ class SettingsService : PersistentStateComponent<Settings>{
         }
 
     var isAllowedFunctionKeys: Boolean
-        get() = BitMask.has(KeyboardFlags.FUNCTIONAL_KEYS, state.keyboardFlags)
+        get() = BitMask.has(KeyboardFlags.FUNCTION_KEYS, state.keyboardFlags)
         set(value){
-            setKeyboardFlags(value, KeyboardFlags.FUNCTIONAL_KEYS)
+            setKeyboardFlags(value, KeyboardFlags.FUNCTION_KEYS)
         }
 
     var isAllowedCursorControlKeys: Boolean
