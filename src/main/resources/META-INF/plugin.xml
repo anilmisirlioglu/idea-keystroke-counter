@@ -23,6 +23,12 @@
                 displayName="Keystroke Counter"
                 instance="org.anilmisirlioglu.keystroke.SettingsConfigurable"
                 groupId="tools"/>
+
+        <toolWindow
+                id="Key Stroke Statistics"
+                anchor="right"
+                factoryClass="org.anilmisirlioglu.keystroke.StatisticsToolWindowFactory"
+                icon="AllIcons.General.ExternalTools"/>
     </extensions>
 
     <actions>
