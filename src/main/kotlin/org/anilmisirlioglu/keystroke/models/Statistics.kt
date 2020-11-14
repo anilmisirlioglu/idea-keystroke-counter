@@ -12,5 +12,5 @@ data class Statistics(
     @OptionTag(converter = LocalDateTimeConverter::class)
     val startAt: LocalDateTime = LocalDateTime.now(),
     @Tag("years")
-    val years: HashMap<Int, HashMap<Int, Int>> = hashMapOf()
+    var years: HashMap<Int, HashMap<Int, Int>> = hashMapOf()
 )

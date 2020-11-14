@@ -55,12 +55,7 @@ class StatisticsService : PersistentStateComponent<Statistics>{
 
     fun reset(){
         synchronized(state){
-            state.years.apply{
-                val year = Calendar.getInstance().get(Calendar.YEAR)
-
-                this[year] = hashMapOf()
-                this[year + 1] = hashMapOf()
-            }
+            state.years = hashMapOf()
         }
     }
 

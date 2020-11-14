@@ -22,7 +22,6 @@ class KeyboardListener : AWTEventListener, Disposable{
     override fun eventDispatched(event: AWTEvent?){
         if(event is KeyEvent && event.id == Event.KEY_RELEASE){
             if(!settings.isCountOnlyWorkspace || event.component is EditorComponentImpl){
-                println(event.isCursorControlKey)
                 when{
                     event.isTypingKey -> statistics.inc()
                     settings.isAllowedFunctionKeys && event.isFunctionKey -> statistics.inc()
@@ -33,7 +32,7 @@ class KeyboardListener : AWTEventListener, Disposable{
         }
     }
 
-    override fun dispose() {
+    override fun dispose(){
         Toolkit.getDefaultToolkit().removeAWTEventListener(this)
     }
 
