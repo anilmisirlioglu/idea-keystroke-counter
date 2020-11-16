@@ -10,7 +10,7 @@ data class Statistics(
     val version: Int = 1,
     @Tag("startAt")
     @OptionTag(converter = LocalDateTimeConverter::class)
-    val startAt: LocalDateTime = LocalDateTime.now(),
+    var startAt: LocalDateTime = LocalDateTime.now(),
     @Tag("years")
     var years: HashMap<Int, HashMap<Int, Int>> = hashMapOf()
 )

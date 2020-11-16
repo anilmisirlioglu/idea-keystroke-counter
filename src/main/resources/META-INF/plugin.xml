@@ -32,13 +32,13 @@
     </extensions>
 
     <actions>
-        <group id="Keystroke.ViewAction" text="View Test" description="TODO">
+        <group id="Keystroke.Action" text="Reset Statistics" description="Reset keystroke statistics">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action
-                    class="org.anilmisirlioglu.keystroke.MainAction"
-                    id="Keystroke.Actions.ViewAction"
-                    text="Test!"
-                    description="Test view action"
+                    class="org.anilmisirlioglu.keystroke.actions.StatisticsResetAction"
+                    id="Keystroke.Actions.ResetStatistics"
+                    text="Reset Statistics"
+                    description="Reset statistics"
             />
         </group>
     </actions>
