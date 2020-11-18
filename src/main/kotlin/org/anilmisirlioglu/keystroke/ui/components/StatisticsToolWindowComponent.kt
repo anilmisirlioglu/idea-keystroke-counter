@@ -33,6 +33,12 @@ class StatisticsToolWindowComponent : Disposable{
                 DateTimeUtils.parse(statistics.state.startAt)
             )
         )
+        val numberOfKeystrokeTodayLabel = JLabel(
+            toHTML(
+                MessageBundle.message("toolbar.label.overview.today.keystroke.count"),
+                statistics.numberOfKeystrokeToday.toDecimal()
+            )
+        )
 
         val totalKeystrokeCountLabel = JLabel(
             toHTML(
@@ -60,6 +66,7 @@ class StatisticsToolWindowComponent : Disposable{
         FormBuilder
             .createFormBuilder()
             .addComponent(overviewTitledSeparator)
+            .addComponent(numberOfKeystrokeTodayLabel)
             .addComponent(statisticsResetDateLabel)
             .addComponent(totalKeystrokeCountLabel)
             .addComponent(mostKeystrokeDateLabel)

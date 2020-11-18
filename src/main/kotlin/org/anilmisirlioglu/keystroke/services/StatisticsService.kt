@@ -9,7 +9,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Year
 import java.util.*
-import kotlin.streams.toList
 
 @State(
     name = "KeystrokeStatistics",
@@ -64,6 +63,13 @@ class StatisticsService : PersistentStateComponent<Statistics>{
         }
     }
 
+    val numberOfKeystrokeToday: Int
+        get(){
+            val calendar = Calendar.getInstance()
+
+            return state.years[calendar.get(Calendar.YEAR)]?.get(calendar.get(Calendar.DAY_OF_YEAR)) ?: 0
+        }
+
     val totalKeystrokeCount: Int
         get() = state.years.values.map{ it.values.toList().sum() }.sum()
 
@@ -82,6 +88,49 @@ class StatisticsService : PersistentStateComponent<Statistics>{
             }
 
             return localDate
+        }
+
+    val datasets: Statistics.Datasets
+        get(){
+            val calendar = Calendar.getInstance()
+            val year = state.years[calendar.get(Calendar.YEAR)] ?: hashMapOf()
+
+            val intervalOfWeek = run{
+                val cWeek = calendar.clone() as Calendar
+
+                cWeek.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+                val startOfWeek = cWeek.get(Calendar.DAY_OF_YEAR)
+
+                cWeek.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+                val finishOfWeek = cWeek.get(Calendar.DAY_OF_YEAR)
+
+                startOfWeek..finishOfWeek
+            }
+
+            val intervalOfMonth = run{
+                val cMonth = calendar.clone() as Calendar
+
+                cMonth.set(Calendar.DAY_OF_MONTH, 1)
+                val startOfMonth = cMonth.get(Calendar.DAY_OF_YEAR)
+
+                cMonth.set(Calendar.DAY_OF_MONTH, cMonth.getActualMaximum(Calendar.DAY_OF_MONTH))
+                val finishOfMonth = cMonth.get(Calendar.DAY_OF_YEAR)
+
+                startOfMonth..finishOfMonth
+            }
+
+            val weekly = MutableList(7){ 0 }
+            val monthly = MutableList(intervalOfMonth.count()){ 0 }
+            val yearly = MutableList(12){ 0 }
+            for((day, value) in year){
+                if(day in intervalOfWeek) weekly[intervalOfWeek.indexOf(day)] = value
+                if(day in intervalOfMonth) monthly[intervalOfMonth.indexOf(day)] = value
+
+                calendar.set(Calendar.DAY_OF_YEAR, day)
+                yearly[calendar.get(Calendar.MONTH)] += value
+            }
+
+            return Statistics.Datasets(weekly, monthly, yearly)
         }
 
 }

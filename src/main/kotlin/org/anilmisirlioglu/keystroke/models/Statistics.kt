@@ -13,4 +13,12 @@ data class Statistics(
     var startAt: LocalDateTime = LocalDateTime.now(),
     @Tag("years")
     var years: HashMap<Int, HashMap<Int, Int>> = hashMapOf()
-)
+){
+
+    data class Datasets(
+        val weekly: List<Int>,
+        val monthly: List<Int>,
+        val yearly: List<Int>
+    )
+
+}
