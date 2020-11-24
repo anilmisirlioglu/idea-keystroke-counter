@@ -34,6 +34,12 @@ class SettingsService : PersistentStateComponent<Settings>{
             state.countOnlyWorkspace = value
         }
 
+    var dailyTarget: Int
+        get() = state.dailyTarget
+        set(value){
+            state.dailyTarget = value
+        }
+
     var isAllowedOtherKeys: Boolean
         get() = BitMask.has(KeyboardFlags.OTHER_KEYS, state.keyboardFlags)
         set(value){

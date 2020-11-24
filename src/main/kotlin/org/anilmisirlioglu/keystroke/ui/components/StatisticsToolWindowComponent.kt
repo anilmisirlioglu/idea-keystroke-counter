@@ -11,6 +11,7 @@ import com.intellij.xml.util.XmlStringUtil
 import org.anilmisirlioglu.keystroke.MessageBundle
 import org.anilmisirlioglu.keystroke.actions.StatisticsResetAction
 import org.anilmisirlioglu.keystroke.rebuild.toDecimal
+import org.anilmisirlioglu.keystroke.services.SettingsService
 import org.anilmisirlioglu.keystroke.services.StatisticsService
 import org.anilmisirlioglu.keystroke.ui.utils.Chart
 import org.anilmisirlioglu.keystroke.utils.DateTimeUtils
@@ -22,6 +23,7 @@ class StatisticsToolWindowComponent : Disposable{
     val panel: JPanel
 
     private val statistics = StatisticsService.instance
+    private val settings = SettingsService.instance
 
     private val toolbar: ActionToolbarImpl = run{
         val group = DefaultActionGroup("main", true).apply{
@@ -44,6 +46,14 @@ class StatisticsToolWindowComponent : Disposable{
                 DateTimeUtils.parse(statistics.state.startAt)
             )
         )
+
+        val dailyTargetLabel = JLabel(
+            toHTML(
+                MessageBundle.message("toolbar.separator.target"),
+                settings.dailyTarget.toDecimal()
+            )
+        )
+
         val numberOfKeystrokeTodayLabel = JLabel(
             toHTML(
                 MessageBundle.message("toolbar.label.overview.today.keystroke.count"),
@@ -78,10 +88,30 @@ class StatisticsToolWindowComponent : Disposable{
             .createFormBuilder()
             .addComponent(overviewTitledSeparator)
             .addComponentToRightColumn(numberOfKeystrokeTodayLabel)
+            .addComponentToRightColumn(dailyTargetLabel)
             .addComponentToRightColumn(statisticsResetDateLabel)
             .addComponentToRightColumn(totalKeystrokeCountLabel)
             .addComponentToRightColumn(mostKeystrokeDateLabel)
             .addComponentToRightColumn(maxKeystrokeCountLabel)
+    }
+
+    private val target: FormBuilder = run{
+        val targetTitledSeparator = TitledSeparator(
+            MessageBundle.message("toolbar.separator.target")
+        )
+
+        var percentageOfDailyTarget = (statistics.numberOfKeystrokeToday.toDouble() * 100 / settings.dailyTarget) / 100
+        if(percentageOfDailyTarget > 1) percentageOfDailyTarget = 1.0
+
+        val targetChart = Chart.buildDialChart(
+            MessageBundle.message("toolbar.separator.target"),
+            percentageOfDailyTarget
+        )
+
+        FormBuilder
+            .createFormBuilder()
+            .addComponent(targetTitledSeparator)
+            .addComponent(targetChart)
     }
 
     private val analysis: FormBuilder = run{
@@ -142,6 +172,8 @@ class StatisticsToolWindowComponent : Disposable{
             .createFormBuilder()
             .addComponent(toolbar)
             .addComponentToRightColumn(overview.panel)
+            .addVerticalGap(3)
+            .addComponentToRightColumn(target.panel)
             .addVerticalGap(3)
             .addComponentToRightColumn(analysis.panel)
             .addComponentFillVertically(JPanel(), 0)

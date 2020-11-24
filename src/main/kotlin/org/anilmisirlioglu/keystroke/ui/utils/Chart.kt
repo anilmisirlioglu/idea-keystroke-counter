@@ -2,6 +2,9 @@ package org.anilmisirlioglu.keystroke.ui.utils
 
 import com.intellij.ui.JBColor
 import org.knowm.xchart.*
+import org.knowm.xchart.internal.chartpart.Chart
+import org.knowm.xchart.internal.series.Series
+import org.knowm.xchart.style.Styler
 
 object Chart{
 
@@ -83,5 +86,34 @@ object Chart{
 
         return XChartPanel(chart)
     }
+
+    fun buildDialChart(
+        title: String,
+        value: Double
+    ): XChartPanel<DialChart>{
+        val chart: DialChart = DialChartBuilder()
+            .width(400)
+            .height(200)
+            .title(title)
+            .build()
+
+        with(chart){
+            with(styler){
+                chartBackgroundColor = JBColor.PanelBackground
+                chartFontColor = JBColor.black
+                infoPanelBackgroundColor = JBColor.black
+                plotBackgroundColor = JBColor.white
+
+                isChartTitleVisible = false
+                isLegendVisible = false
+            }
+
+            addSeries(".", value)
+        }
+
+        return XChartPanel(chart)
+    }
+
+    private fun setStyle(chart: Chart<Styler, Series>){}
 
 }
