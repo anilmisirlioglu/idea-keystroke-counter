@@ -64,7 +64,6 @@ object Chart{
         with(chart){
             // Customize Chart
             with(styler){
-                /*defaultSeriesRenderStyle = XYSeriesRenderStyle.Line*/
                 chartBackgroundColor = JBColor.PanelBackground
                 chartFontColor = JBColor.black
                 axisTickLabelsColor = JBColor.black

@@ -91,19 +91,17 @@ class StatisticsToolWindowComponent : Disposable{
             MessageBundle.message("toolbar.separator.analysis")
         )
 
+        val rangeOfDays = 1..7
         val weeklyStatisticsChart = Chart.buildXYChart(
             MessageBundle.message("toolbar.chart.statistics.weekly"),
             MessageBundle.message("toolbar.chart.statistics.days"),
             MessageBundle.message("toolbar.chart.statistics.strokes.count"),
-            (1..7).toList(),
+            rangeOfDays.toList(),
             datasets.weekly
         ).apply{
             val days = MessageBundle.message("days").split(',')
-            val xMarkMap = mutableMapOf<Any, Any>(
-                1 to days[0], 2 to days[1], 3 to days[2],
-                4 to days[3], 5 to days[4], 6 to days[5],
-                7 to days[6]
-            )
+            val xMarkMap = mutableMapOf<Any, Any>()
+            rangeOfDays.forEach{ xMarkMap[it] = days[it - 1] }
 
             chart.setCustomXAxisTickLabelsMap(xMarkMap)
         }
@@ -116,11 +114,27 @@ class StatisticsToolWindowComponent : Disposable{
             datasets.monthly
         )
 
+        val rangeOfMonths = 1..12
+        val yearlyStatisticsChart = Chart.buildXYChart(
+            MessageBundle.message("toolbar.chart.statistics.yearly"),
+            MessageBundle.message("toolbar.chart.statistics.months"),
+            MessageBundle.message("toolbar.chart.statistics.strokes.count"),
+            rangeOfMonths.toList(),
+            datasets.yearly
+        ).apply{
+            val months = MessageBundle.message("months").split(',')
+            val xMarkMap = mutableMapOf<Any, Any>()
+            rangeOfMonths.forEach{ xMarkMap[it] = months[it - 1] }
+
+            chart.setCustomXAxisTickLabelsMap(xMarkMap)
+        }
+
         FormBuilder
             .createFormBuilder()
             .addComponent(analysisTitledSeparator)
             .addComponent(weeklyStatisticsChart)
             .addComponent(monthlyStatisticsChart)
+            .addComponent(yearlyStatisticsChart)
     }
 
     init{
