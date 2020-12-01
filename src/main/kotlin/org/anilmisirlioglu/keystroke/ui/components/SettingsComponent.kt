@@ -11,7 +11,6 @@ import org.anilmisirlioglu.keystroke.services.SettingsService
 import java.awt.Dimension
 import javax.swing.*
 
-
 // Simple settings form
 class SettingsComponent{
 
