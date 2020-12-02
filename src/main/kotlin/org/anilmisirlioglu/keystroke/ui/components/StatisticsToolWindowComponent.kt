@@ -5,7 +5,10 @@ import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl
+import com.intellij.ui.CaptionPanel
 import com.intellij.ui.TitledSeparator
+import com.intellij.ui.border.CustomLineBorder
+import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.FormBuilder
 import com.intellij.xml.util.XmlStringUtil
 import org.anilmisirlioglu.keystroke.MessageBundle
@@ -15,12 +18,9 @@ import org.anilmisirlioglu.keystroke.services.SettingsService
 import org.anilmisirlioglu.keystroke.services.StatisticsService
 import org.anilmisirlioglu.keystroke.ui.utils.Chart
 import org.anilmisirlioglu.keystroke.utils.DateTimeUtils
-import javax.swing.JLabel
-import javax.swing.JPanel
+import javax.swing.*
 
 class StatisticsToolWindowComponent : Disposable{
-
-    var panel: JPanel
 
     private val statistics = StatisticsService.instance
 
@@ -32,9 +32,13 @@ class StatisticsToolWindowComponent : Disposable{
                 add(StatisticsResetAction())
             }
 
-            return ActionManager
+            val toolbar = ActionManager
                 .getInstance()
                 .createActionToolbar(ActionPlaces.TOOLBAR, group, true) as ActionToolbarImpl
+
+            return toolbar.apply{
+                border = CustomLineBorder(CaptionPanel.CNT_ACTIVE_BORDER_COLOR, 0, 0, 1, 0)
+            }
     }
 
     private val overview: FormBuilder
@@ -172,14 +176,9 @@ class StatisticsToolWindowComponent : Disposable{
                 .addComponent(yearlyStatisticsChart)
     }
 
-    init{
-        panel = buildPanel()
-    }
-
-    fun buildPanel(): JPanel{
-        return FormBuilder
+    private val panel: JPanel
+        get() = FormBuilder
             .createFormBuilder()
-            .addComponent(toolbar)
             .addComponentToRightColumn(overview.panel)
             .addVerticalGap(3)
             .addComponentToRightColumn(target.panel)
@@ -187,6 +186,19 @@ class StatisticsToolWindowComponent : Disposable{
             .addComponentToRightColumn(analysis.panel)
             .addComponentFillVertically(JPanel(), 0)
             .panel
+
+    fun buildContent(): JPanel{
+        return JPanel().apply{
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+
+            val scrollPane = JBScrollPane(panel).apply{
+                verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
+                horizontalScrollBarPolicy = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
+            }
+
+            add(toolbar)
+            add(scrollPane)
+        }
     }
 
     private fun toHTML(text: String, value: Any): String = XmlStringUtil.wrapInHtml("<b>$text:</b> $value")

@@ -7,10 +7,8 @@ import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.openapi.wm.ex.ToolWindowManagerAdapter
 import com.intellij.openapi.wm.ex.ToolWindowManagerEx
-import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.content.ContentFactory
 import org.anilmisirlioglu.keystroke.ui.components.StatisticsToolWindowComponent
-import javax.swing.ScrollPaneConstants
 
 class StatisticsToolWindowFactory : ToolWindowFactory, DumbAware{
 
@@ -20,15 +18,10 @@ class StatisticsToolWindowFactory : ToolWindowFactory, DumbAware{
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow){
         StatisticsToolWindowComponent().run{
-            val toolWindowContent = JBScrollPane(panel).apply{
-                verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
-            }
-
+            val toolWindowContent = buildContent()
             val contentFactory = ContentFactory.SERVICE.getInstance()
-            val content = contentFactory.createContent(toolWindowContent, null, false).apply{
-                setPreferredFocusedComponent{
-                    toolWindowContent
-                }
+            val content = contentFactory.createContent(toolWindowContent, "", false).apply{
+                preferredFocusableComponent = toolWindowContent
                 setDisposer(this)
             }
 
@@ -39,15 +32,18 @@ class StatisticsToolWindowFactory : ToolWindowFactory, DumbAware{
 
                 override fun stateChanged(toolWindowManager: ToolWindowManager){
                     val window = toolWindowManager.getToolWindow(WINDOW_ID)
-                    if(window != null){
-                        if(!window.isVisible){
-                            window.component.run{
-                                val panel = JBScrollPane(buildPanel()).apply{
-                                    verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
-                                }
+                    if (window != null){
+                        if (!window.isVisible){
+                            val newToolWindowContent = buildContent()
 
+                            window
+                                .contentManager
+                                .findContent("")
+                                .preferredFocusableComponent = newToolWindowContent
+
+                            window.component.run{
                                 removeAll()
-                                add(panel)
+                                add(newToolWindowContent)
                                 revalidate()
                                 repaint()
                                 updateUI()
@@ -55,6 +51,7 @@ class StatisticsToolWindowFactory : ToolWindowFactory, DumbAware{
                         }
                     }
                 }
+
             })
         }
     }
