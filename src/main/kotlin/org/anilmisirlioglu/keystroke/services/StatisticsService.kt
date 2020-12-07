@@ -58,7 +58,11 @@ class StatisticsService : PersistentStateComponent<Statistics>{
 
     fun reset(){
         synchronized(state){
-            state.years = hashMapOf()
+            val year = Calendar.getInstance().get(Calendar.YEAR)
+            state.years = hashMapOf(
+                year to hashMapOf(),
+                year + 1 to hashMapOf()
+            )
             state.startAt = LocalDateTime.now()
         }
     }
