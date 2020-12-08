@@ -14,20 +14,20 @@
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.services.StatisticsService"/>
+        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.statistics.StatisticsService"/>
 
-        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.services.SettingsService"/>
+        <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.settings.SettingsService"/>
 
         <applicationConfigurable
                 id="KeyStrokeConfiguration"
                 displayName="Keystroke Counter"
-                instance="org.anilmisirlioglu.keystroke.SettingsConfigurable"
+                instance="org.anilmisirlioglu.keystroke.settings.SettingsConfigurable"
                 groupId="tools"/>
 
         <toolWindow
                 id="Key Stroke Statistics"
                 anchor="right"
-                factoryClass="org.anilmisirlioglu.keystroke.StatisticsToolWindowFactory"
+                factoryClass="org.anilmisirlioglu.keystroke.statistics.StatisticsToolWindowFactory"
                 icon="AllIcons.General.ExternalTools"/>
     </extensions>
 
@@ -35,7 +35,7 @@
         <group id="Keystroke.Action" text="Reset Statistics" description="Reset keystroke statistics">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action
-                    class="org.anilmisirlioglu.keystroke.actions.StatisticsResetAction"
+                    class="org.anilmisirlioglu.keystroke.statistics.StatisticsResetAction"
                     id="Keystroke.Actions.ResetStatistics"
                     text="Reset Statistics"
                     description="Reset statistics"

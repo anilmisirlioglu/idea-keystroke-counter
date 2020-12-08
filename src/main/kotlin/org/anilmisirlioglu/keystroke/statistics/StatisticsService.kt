@@ -1,10 +1,9 @@
-package org.anilmisirlioglu.keystroke.services
+package org.anilmisirlioglu.keystroke.statistics
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import org.anilmisirlioglu.keystroke.models.Statistics
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Year

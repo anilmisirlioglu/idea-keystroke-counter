@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke.ui.components
+package org.anilmisirlioglu.keystroke.statistics
 
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.ActionManager
@@ -12,11 +12,9 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.FormBuilder
 import com.intellij.xml.util.XmlStringUtil
 import org.anilmisirlioglu.keystroke.MessageBundle
-import org.anilmisirlioglu.keystroke.actions.StatisticsResetAction
 import org.anilmisirlioglu.keystroke.rebuild.toDecimal
-import org.anilmisirlioglu.keystroke.services.SettingsService
-import org.anilmisirlioglu.keystroke.services.StatisticsService
-import org.anilmisirlioglu.keystroke.ui.utils.Chart
+import org.anilmisirlioglu.keystroke.settings.SettingsService
+import org.anilmisirlioglu.keystroke.ui.Chart
 import org.anilmisirlioglu.keystroke.utils.DateTimeUtils
 import javax.swing.*
 
@@ -39,7 +37,7 @@ class StatisticsToolWindowComponent : Disposable{
             return toolbar.apply{
                 border = CustomLineBorder(CaptionPanel.CNT_ACTIVE_BORDER_COLOR, 0, 0, 1, 0)
             }
-    }
+        }
 
     private val overview: FormBuilder
         get(){
@@ -100,7 +98,7 @@ class StatisticsToolWindowComponent : Disposable{
                 .addComponentToRightColumn(totalKeystrokeCountLabel)
                 .addComponentToRightColumn(mostKeystrokeDateLabel)
                 .addComponentToRightColumn(maxKeystrokeCountLabel)
-    }
+        }
 
     private val target: FormBuilder
         get(){
@@ -120,7 +118,7 @@ class StatisticsToolWindowComponent : Disposable{
                 .createFormBuilder()
                 .addComponent(targetTitledSeparator)
                 .addComponent(targetChart)
-    }
+        }
 
     private val analysis: FormBuilder
         get(){
@@ -174,7 +172,7 @@ class StatisticsToolWindowComponent : Disposable{
                 .addComponent(weeklyStatisticsChart)
                 .addComponent(monthlyStatisticsChart)
                 .addComponent(yearlyStatisticsChart)
-    }
+        }
 
     private val panel: JPanel
         get() = FormBuilder

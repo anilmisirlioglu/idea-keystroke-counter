@@ -1,7 +1,6 @@
-package org.anilmisirlioglu.keystroke
+package org.anilmisirlioglu.keystroke.settings
 
 import com.intellij.openapi.options.SearchableConfigurable
-import org.anilmisirlioglu.keystroke.ui.components.SettingsComponent
 import org.jetbrains.annotations.Nls
 import javax.swing.JComponent
 

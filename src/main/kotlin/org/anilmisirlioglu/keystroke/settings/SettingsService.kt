@@ -1,11 +1,10 @@
-package org.anilmisirlioglu.keystroke.services
+package org.anilmisirlioglu.keystroke.settings
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import org.anilmisirlioglu.keystroke.models.Settings
-import org.anilmisirlioglu.keystroke.models.Settings.KeyboardFlags
+import org.anilmisirlioglu.keystroke.settings.Settings.KeyboardFlags
 import org.anilmisirlioglu.keystroke.utils.BitMask
 
 @State(

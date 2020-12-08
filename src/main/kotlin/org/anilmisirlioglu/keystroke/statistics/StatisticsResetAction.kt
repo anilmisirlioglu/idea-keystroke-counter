@@ -1,11 +1,10 @@
-package org.anilmisirlioglu.keystroke.actions
+package org.anilmisirlioglu.keystroke.statistics
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.Messages
 import org.anilmisirlioglu.keystroke.MessageBundle
-import org.anilmisirlioglu.keystroke.services.StatisticsService
 
 class StatisticsResetAction : AnAction(
     MessageBundle.message("toolbar.action.overview.reset.statistics.title"),

@@ -2,8 +2,8 @@ package org.anilmisirlioglu.keystroke
 
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.editor.impl.EditorComponentImpl
-import org.anilmisirlioglu.keystroke.services.SettingsService
-import org.anilmisirlioglu.keystroke.services.StatisticsService
+import org.anilmisirlioglu.keystroke.settings.SettingsService
+import org.anilmisirlioglu.keystroke.statistics.StatisticsService
 import java.awt.AWTEvent
 import java.awt.Event
 import java.awt.Toolkit

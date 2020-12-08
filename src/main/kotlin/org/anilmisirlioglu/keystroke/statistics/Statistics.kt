@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke.models
+package org.anilmisirlioglu.keystroke.statistics
 
 import com.intellij.util.xmlb.annotations.*
 import org.anilmisirlioglu.keystroke.converters.LocalDateTimeConverter

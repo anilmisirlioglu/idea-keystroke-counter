@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke
+package org.anilmisirlioglu.keystroke.statistics
 
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
@@ -8,7 +8,6 @@ import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.openapi.wm.ex.ToolWindowManagerAdapter
 import com.intellij.openapi.wm.ex.ToolWindowManagerEx
 import com.intellij.ui.content.ContentFactory
-import org.anilmisirlioglu.keystroke.ui.components.StatisticsToolWindowComponent
 
 class StatisticsToolWindowFactory : ToolWindowFactory, DumbAware{
 

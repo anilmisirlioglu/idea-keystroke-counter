@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke.ui.utils
+package org.anilmisirlioglu.keystroke.ui
 
 import com.intellij.ui.JBColor
 import org.knowm.xchart.*
@@ -113,7 +113,5 @@ object Chart{
 
         return XChartPanel(chart)
     }
-
-    private fun setStyle(chart: Chart<Styler, Series>){}
 
 }

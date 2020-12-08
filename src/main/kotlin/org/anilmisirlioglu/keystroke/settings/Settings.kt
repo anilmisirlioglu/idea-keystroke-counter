@@ -1,4 +1,4 @@
-package org.anilmisirlioglu.keystroke.models
+package org.anilmisirlioglu.keystroke.settings
 
 import org.anilmisirlioglu.keystroke.utils.BitMask
 
