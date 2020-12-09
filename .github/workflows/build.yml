@@ -165,8 +165,10 @@ jobs:
         run: |
           PROPERTIES="$(./gradlew properties --console=plain -q)"
           IDE_VERSIONS="$(echo "$PROPERTIES" | grep "^pluginVerifierIdeVersions:" | base64)"
+
           echo "::set-output name=ideVersions::$IDE_VERSIONS"
           echo "::set-output name=pluginVerifierHomeDir::~/.pluginVerifier"
+
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache
         uses: actions/cache@v2

@@ -6,4 +6,5 @@
 
 ## [0.0.1]
 ### Added
-- Plugin files
+- Added plugin main features. (See the [README](README.md#features) for more)
+- First version
