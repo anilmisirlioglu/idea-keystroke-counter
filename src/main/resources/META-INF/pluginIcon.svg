@@ -1,0 +1,154 @@
+<!-- for more information: https://jetbrains.org/intellij/sdk/docs/basics/plugin_structure/plugin_icon_file.html#plugin-logo-requirements -->
+<svg
+        id="Layer_2"
+        enable-background="new 0 0 512"
+        height="40"
+        viewBox="0 0 512 512"
+        width="40"
+        xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <g>
+            <g>
+                <path d="m10 232h492v230h-492z" fill="#6e83b7"/>
+            </g>
+            <g>
+                <path d="m218 316h30v222h-30z" fill="#ffb0aa" transform="matrix(0 1 -1 0 660 194)"/>
+            </g>
+            <g>
+                <path d="m30 412h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m76 412h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m104 372h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m30 372h64v30h-64z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m334 372h56v30h-56z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m30 332h50v30h-50z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m446 412h36v30h-36z" fill="#ffe352"/>
+            </g>
+            <g>
+                <path d="m446 372h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m446 332h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m446 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m400 412h36v30h-36z" fill="#ffe352"/>
+            </g>
+            <g>
+                <path d="m400 372h36v30h-36z" fill="#ffe352"/>
+            </g>
+            <g>
+                <path d="m354 412h36v30h-36z" fill="#ffe352"/>
+            </g>
+            <g>
+                <path d="m93 329h30v36h-30z" fill="#ffb0aa" transform="matrix(0 1 -1 0 455 239)"/>
+            </g>
+            <g>
+                <path d="m30 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m30 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m70 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m110 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m150 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m190 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m230 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m270 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m241 202h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m310 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m350 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m390 252h30v30h-30z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m430 252h52v30h-52z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m139 329h30v36h-30z" fill="#ffb0aa" transform="matrix(0 1 -1 0 501 193)"/>
+            </g>
+            <g>
+                <path d="m185 329h30v36h-30z" fill="#ffb0aa" transform="matrix(0 1 -1 0 547 147)"/>
+            </g>
+            <g>
+                <path d="m228 332h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m274 332h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m320 332h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m76 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m125 289h30v36h-30z" fill="#ffb0aa" transform="matrix(0 1 -1 0 447 167)"/>
+            </g>
+            <g>
+                <path d="m168 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m214 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m260 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m306 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m352 292h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m398 292v40h-31v30h69v-70z" fill="#98ca69"/>
+            </g>
+            <g>
+                <path d="m150 372h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m196 372h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m242 372h36v30h-36z" fill="#466089"/>
+            </g>
+            <g>
+                <path d="m288 372h36v30h-36z" fill="#466089"/>
+            </g>
+        </g>
+        <g>
+            <path d="m266 202h-20v-9c0-16.542 13.458-30 30-30h37c11.58 0 21-9.421 21-21s-9.42-21-21-21h-37c-16.542 0-30-13.458-30-30v-42h20v42c0 5.514 4.486 10 10 10h37c22.607 0 41 18.393 41 41s-18.393 41-41 41h-37c-5.514 0-10 4.486-10 10z" fill="#6e83b7"/>
+        </g>
+    </g>
+</svg>
