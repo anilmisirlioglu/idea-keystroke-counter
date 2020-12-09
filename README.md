@@ -39,10 +39,10 @@ Screenshots
 
 License
 -------
-Copyright (c) 2020 [Anıl Mısırlıoğlu][github]. See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).
+Copyright (c) 2020 [Anıl Mısırlıoğlu][github]. See the [LICENSE](./LICENSE) file for license rights and limitations (Apache License 2.0).
 
 [actions]:         https://github.com/anilmisirlioglu/idea-keystroke-counter/actions
-[build-badge]:     https://github.com/anilmisirlioglu/idea-keystroke-counter/workflows/build/badge.svg
+[build-badge]:     https://github.com/anilmisirlioglu/idea-keystroke-counter/workflows/Build/badge.svg
 [latest-release]:  https://github.com/anilmisirlioglu/idea-keystroke-counter/releases/latest
 [github]:          https://github.com/anilmisirlioglu
 [plugin]:          https://plugins.jetbrains.com/plugin/#todo

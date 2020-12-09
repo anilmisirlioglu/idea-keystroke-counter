@@ -3,9 +3,8 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    //id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.4.10"
-    id("org.jetbrains.intellij") version "0.6.3"
+    id("org.jetbrains.kotlin.jvm") version "1.4.20"
+    id("org.jetbrains.intellij") version "0.6.5"
     id("org.jetbrains.changelog") version "0.6.2"
 }
 
