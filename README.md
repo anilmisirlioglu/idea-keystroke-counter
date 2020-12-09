@@ -45,6 +45,6 @@ Copyright (c) 2020 [Anıl Mısırlıoğlu][github]. See the [LICENSE](./LICENSE)
 [build-badge]:     https://github.com/anilmisirlioglu/idea-keystroke-counter/workflows/Build/badge.svg
 [latest-release]:  https://github.com/anilmisirlioglu/idea-keystroke-counter/releases/latest
 [github]:          https://github.com/anilmisirlioglu
-[plugin]:          https://plugins.jetbrains.com/plugin/#todo
-[version-badge]:   https://img.shields.io/jetbrains/plugin/v/#todo
-[downloads-badge]: https://img.shields.io/jetbrains/plugin/d/#todo
+[plugin]:          https://plugins.jetbrains.com/plugin/15538
+[version-badge]:   https://img.shields.io/jetbrains/plugin/v/15538
+[downloads-badge]: https://img.shields.io/jetbrains/plugin/d/15538
