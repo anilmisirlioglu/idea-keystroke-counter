@@ -5,6 +5,8 @@ IDEA Keystroke Counter
 [![Version][version-badge]][plugin]
 [![Downloads][downloads-badge]][plugin]
 
+<!-- Plugin description start -->
+
 Keystroke Counter tracks your keystrokes on the keyboard and counts them 
 for you. When you set a daily limit, it shows how close you are to your 
 daily limit. At the same time it shows the keystrokes it counts with 
@@ -50,3 +52,5 @@ Copyright (c) 2020 [Anıl Mısırlıoğlu][github]. See the [LICENSE](./LICENSE)
 [plugin]: https://plugins.jetbrains.com/plugin/15538
 [version-badge]: https://img.shields.io/jetbrains/plugin/v/15538
 [downloads-badge]: https://img.shields.io/jetbrains/plugin/d/15538
+
+<!-- Plugin description end -->

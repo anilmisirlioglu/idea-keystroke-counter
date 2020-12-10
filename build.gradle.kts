@@ -62,12 +62,17 @@ tasks {
 
         pluginDescription(
             closure {
-                File("./README.md")
-                    .readText()
-                    .lines()
-                    .joinToString("\n").run {
-                        markdownToHTML(this)
+                File("./README.md").readText().lines().run {
+                    val start = "<!-- Plugin description start -->"
+                    val end = "<!-- Plugin description end -->"
+
+                    if (!containsAll(listOf(start, end))) {
+                        throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                     }
+                    subList(indexOf(start) + 1, indexOf(end))
+                }.joinToString("\n").run { 
+                    markdownToHTML(this) 
+                }
             }
         )
 
