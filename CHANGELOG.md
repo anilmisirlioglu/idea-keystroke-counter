@@ -10,7 +10,7 @@
     - Support for many keyboards.
 - First version
 
-## [0.0.1]
+## [1.0.0]
 ### Added
 - Added plugin main features. (See the [README](README.md#features) for more)
     - Counts your keystrokes using low memory.
