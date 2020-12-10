@@ -5,9 +5,11 @@ IDEA Keystroke Counter
 [![Version][version-badge]][plugin]
 [![Downloads][downloads-badge]][plugin]
 
-<!-- Plugin description -->
-Keystroke counter and statistics tool for JetBrains IDEs.
-<!-- Plugin description end -->
+Keystroke Counter tracks your keystrokes on the keyboard and counts them 
+for you. When you set a daily limit, it shows how close you are to your 
+daily limit. At the same time it shows the keystrokes it counts with 
+detailed visualized statistics. Allows you to customize the keys to count from the 
+settings. Supports most keyboards.
 
 Features
 --------
@@ -41,10 +43,10 @@ License
 -------
 Copyright (c) 2020 [Anıl Mısırlıoğlu][github]. See the [LICENSE](./LICENSE) file for license rights and limitations (Apache License 2.0).
 
-[actions]:         https://github.com/anilmisirlioglu/idea-keystroke-counter/actions
-[build-badge]:     https://github.com/anilmisirlioglu/idea-keystroke-counter/workflows/Build/badge.svg
-[latest-release]:  https://github.com/anilmisirlioglu/idea-keystroke-counter/releases/latest
-[github]:          https://github.com/anilmisirlioglu
-[plugin]:          https://plugins.jetbrains.com/plugin/15538
-[version-badge]:   https://img.shields.io/jetbrains/plugin/v/15538
+[actions]: https://github.com/anilmisirlioglu/idea-keystroke-counter/actions
+[build-badge]: https://github.com/anilmisirlioglu/idea-keystroke-counter/workflows/Build/badge.svg
+[latest-release]: https://github.com/anilmisirlioglu/idea-keystroke-counter/releases/latest
+[github]: https://github.com/anilmisirlioglu
+[plugin]: https://plugins.jetbrains.com/plugin/15538
+[version-badge]: https://img.shields.io/jetbrains/plugin/v/15538
 [downloads-badge]: https://img.shields.io/jetbrains/plugin/d/15538

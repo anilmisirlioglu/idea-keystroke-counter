@@ -3,8 +3,6 @@
     <name>Keystroke Counter</name>
     <vendor email="misirlioglisamet@gmail.com" url="https://www.asena.xyz">Anıl Mısırlıoğlu</vendor>
 
-    <description>Keystroke counter and statistics tool for JetBrains IDEs.</description>
-
     <depends>com.intellij.modules.platform</depends>
 
     <application-components>
