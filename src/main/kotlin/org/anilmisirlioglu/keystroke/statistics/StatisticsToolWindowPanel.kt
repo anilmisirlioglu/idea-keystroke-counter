@@ -4,6 +4,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
@@ -55,6 +56,21 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 override fun displayTextInToolbar(): Boolean = false
             }
 
+            val settingsAction = object : AnAction(
+                MessageBundle.message("toolbar.action.overview.settings.title"),
+                MessageBundle.message("toolbar.action.overview.settings.description"),
+                AllIcons.General.GearPlain
+            ){
+                override fun actionPerformed(e: AnActionEvent){
+                    ShowSettingsUtil.getInstance().showSettingsDialog(
+                        e.project,
+                        "Keystore Counter"
+                    )
+                }
+
+                override fun displayTextInToolbar(): Boolean = false
+            }
+
             val resetAction = object : AnAction(
                 MessageBundle.message("toolbar.action.overview.reset.statistics.title"),
                 MessageBundle.message("toolbar.action.overview.reset.statistics.description"),
@@ -79,6 +95,7 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 add(refreshAction)
                 addSeparator()
                 add(resetAction)
+                add(settingsAction)
             }
 
             return ActionManager
