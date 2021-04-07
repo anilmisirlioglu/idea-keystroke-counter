@@ -1,9 +1,14 @@
 package org.anilmisirlioglu.keystroke.statistics
 
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType
+import com.intellij.notification.Notifications
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import org.anilmisirlioglu.keystroke.MessageBundle
+import org.anilmisirlioglu.keystroke.settings.SettingsService
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Year
@@ -19,6 +24,7 @@ class StatisticsService : PersistentStateComponent<Statistics>{
 
     companion object{
         val instance: StatisticsService = ServiceManager.getService(StatisticsService::class.java)
+        val settings: SettingsService = SettingsService.instance
     }
 
     private var state: Statistics = Statistics()
@@ -50,6 +56,17 @@ class StatisticsService : PersistentStateComponent<Statistics>{
                 when(val count = this[day]){
                     null -> this[day] = 1
                     else -> this[day] = count + 1
+                }
+
+                if(this[day] == settings.dailyTarget){
+                    Notifications.Bus.notify(
+                        Notification(
+                            "Keystore Counter",
+                            MessageBundle.getMessage("notifications.daily.limit.title"),
+                            MessageBundle.getMessage("notifications.daily.limit.description", settings.dailyTarget),
+                            NotificationType.INFORMATION
+                        )
+                    )
                 }
             }
         }

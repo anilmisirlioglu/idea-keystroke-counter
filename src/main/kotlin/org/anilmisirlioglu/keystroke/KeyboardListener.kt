@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.impl.EditorComponentImpl
 import org.anilmisirlioglu.keystroke.settings.SettingsService
 import org.anilmisirlioglu.keystroke.statistics.StatisticsService
 import java.awt.AWTEvent
-import java.awt.Event
 import java.awt.Toolkit
 import java.awt.event.AWTEventListener
 import java.awt.event.KeyEvent
@@ -20,7 +19,7 @@ class KeyboardListener : AWTEventListener, Disposable{
     }
 
     override fun eventDispatched(event: AWTEvent?){
-        if(event is KeyEvent && event.id == Event.KEY_RELEASE){
+        if(event is KeyEvent && event.id == KeyEvent.KEY_RELEASED){
             if(!settings.isCountOnlyWorkspace || event.component is EditorComponentImpl){
                 when{
                     event.isTypingKey -> statistics.inc()

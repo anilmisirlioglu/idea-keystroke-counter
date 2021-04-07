@@ -4,7 +4,7 @@ import org.anilmisirlioglu.keystroke.utils.BitMask
 
 data class Settings(
     var countOnlyWorkspace: Boolean = true,
-    var dailyTarget: Int = 10000,
+    var dailyTarget: Int = 5000,
     var keyboardFlags: Int = KeyboardFlags.TYPING_KEYS,
 ){
 
