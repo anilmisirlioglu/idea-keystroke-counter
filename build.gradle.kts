@@ -3,9 +3,9 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.20"
-    id("org.jetbrains.intellij") version "0.6.5"
-    id("org.jetbrains.changelog") version "0.6.2"
+    id("org.jetbrains.kotlin.jvm") version "1.4.32"
+    id("org.jetbrains.intellij") version "0.7.2"
+    id("org.jetbrains.changelog") version "1.1.2"
 }
 
 // Import variables from gradle.properties file
@@ -62,7 +62,7 @@ tasks {
 
         pluginDescription(
             closure {
-                File("./README.md").readText().lines().run {
+                File(projectDir, "README.md").readText().lines().run {
                     val start = "<!-- Plugin description start -->"
                     val end = "<!-- Plugin description end -->"
 
@@ -70,8 +70,8 @@ tasks {
                         throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                     }
                     subList(indexOf(start) + 1, indexOf(end))
-                }.joinToString("\n").run { 
-                    markdownToHTML(this) 
+                }.joinToString("\n").run {
+                    markdownToHTML(this)
                 }
             }
         )

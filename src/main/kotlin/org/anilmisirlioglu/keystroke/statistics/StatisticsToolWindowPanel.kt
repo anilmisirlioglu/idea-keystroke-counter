@@ -1,13 +1,18 @@
 package org.anilmisirlioglu.keystroke.statistics
 
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.Disposable
-import com.intellij.openapi.actionSystem.ActionManager
-import com.intellij.openapi.actionSystem.ActionPlaces
-import com.intellij.openapi.actionSystem.DefaultActionGroup
-import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl
+import com.intellij.openapi.actionSystem.*
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.progress.ProgressIndicator
+import com.intellij.openapi.progress.ProgressManager
+import com.intellij.openapi.progress.Task
+import com.intellij.openapi.progress.impl.BackgroundableProcessIndicator
+import com.intellij.openapi.ui.Messages
 import com.intellij.ui.CaptionPanel
 import com.intellij.ui.TitledSeparator
 import com.intellij.ui.border.CustomLineBorder
+import com.intellij.ui.components.JBPanel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.FormBuilder
 import com.intellij.xml.util.XmlStringUtil
@@ -16,27 +21,72 @@ import org.anilmisirlioglu.keystroke.rebuild.toDecimal
 import org.anilmisirlioglu.keystroke.settings.SettingsService
 import org.anilmisirlioglu.keystroke.ui.Chart
 import org.anilmisirlioglu.keystroke.utils.DateTimeUtils
+import java.awt.BorderLayout
 import javax.swing.*
 
-class StatisticsToolWindowComponent : Disposable{
+class StatisticsToolWindowPanel : Disposable, JPanel(){
+
+    private val jPanel = JBPanel<JBPanel<*>>().apply{
+        layout = BoxLayout(this, BoxLayout.Y_AXIS)
+    }
+
+    init{
+        this.layout = BorderLayout()
+        this.add(jPanel, BorderLayout.CENTER)
+
+        this.run()
+    }
 
     private val statistics = StatisticsService.instance
 
     private val settings = SettingsService.instance
 
-    private val toolbar: ActionToolbarImpl
+    private val toolbar: JComponent
         get(){
+            val refreshAction = object : AnAction(
+                MessageBundle.message("toolbar.action.overview.reload.statistics.title"),
+                MessageBundle.message("toolbar.action.overview.reload.statistics.description"),
+                AllIcons.Actions.Refresh
+            ){
+                override fun actionPerformed(e: AnActionEvent){
+                    e.project.run{ this@StatisticsToolWindowPanel.run() }
+                }
+
+                override fun displayTextInToolbar(): Boolean = false
+            }
+
+            val resetAction = object : AnAction(
+                MessageBundle.message("toolbar.action.overview.reset.statistics.title"),
+                MessageBundle.message("toolbar.action.overview.reset.statistics.description"),
+                AllIcons.General.Reset
+            ){
+
+                override fun actionPerformed(e: AnActionEvent) {
+                    val dialog = Messages.showYesNoDialog(
+                        MessageBundle.message("toolbar.action.dialog.statistics.title"),
+                        MessageBundle.message("toolbar.action.dialog.statistics.text"),
+                        Messages.getQuestionIcon()
+                    )
+
+                    if(dialog == Messages.YES){
+                        statistics.reset()
+                    }
+                }
+
+            }
+
             val group = DefaultActionGroup("main", true).apply{
-                add(StatisticsResetAction())
+                add(refreshAction)
+                addSeparator()
+                add(resetAction)
             }
 
-            val toolbar = ActionManager
+            return ActionManager
                 .getInstance()
-                .createActionToolbar(ActionPlaces.TOOLBAR, group, true) as ActionToolbarImpl
-
-            return toolbar.apply{
-                border = CustomLineBorder(CaptionPanel.CNT_ACTIVE_BORDER_COLOR, 0, 0, 1, 0)
-            }
+                .createActionToolbar(ActionPlaces.TOOLBAR, group, true).apply{
+                    border = CustomLineBorder(CaptionPanel.CNT_ACTIVE_BORDER_COLOR, 0, 0, 1, 0)
+                }
+                .component
         }
 
     private val overview: FormBuilder
@@ -185,21 +235,50 @@ class StatisticsToolWindowComponent : Disposable{
             .addComponentFillVertically(JPanel(), 0)
             .panel
 
-    fun buildContent(): JPanel{
-        return JPanel().apply{
-            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+    private fun run(){
+        val task = object : Task.Backgroundable(
+            null,
+            MessageBundle.message("toolbar.tasks.reload.title")
+        ){
 
-            val scrollPane = JBScrollPane(panel).apply{
-                verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
-                horizontalScrollBarPolicy = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
+            override fun run(indicator: ProgressIndicator){
+                ApplicationManager.getApplication().runReadAction{
+                    SwingUtilities.invokeLater{
+                        this@StatisticsToolWindowPanel.deActive()
+                    }
+
+                    SwingUtilities.invokeLater{
+                        this@StatisticsToolWindowPanel.active()
+                    }
+                }
             }
 
-            add(toolbar)
-            add(scrollPane)
         }
+
+        ProgressManager.getInstance().runProcessWithProgressAsynchronously(
+            task,
+            BackgroundableProcessIndicator(task)
+        )
     }
 
     private fun toHTML(text: String, value: Any): String = XmlStringUtil.wrapInHtml("<b>$text:</b> $value")
+
+    private fun buildContent(): JBScrollPane{
+        add(toolbar, BorderLayout.NORTH)
+
+        return JBScrollPane(panel).apply{
+            verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
+            horizontalScrollBarPolicy = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        }
+    }
+
+    private fun active(){
+        this.jPanel.add(buildContent(), BorderLayout.CENTER)
+    }
+
+    private fun deActive(){
+        this.jPanel.removeAll()
+    }
 
     override fun dispose(){}
 

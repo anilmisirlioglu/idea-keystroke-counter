@@ -77,7 +77,7 @@ class StatisticsService : PersistentStateComponent<Statistics>{
         get() = state.years.values.map{ it.values.toList().sum() }.sum()
 
     val maxKeystrokeCount: Int
-        get() = state.years.values.map{ it.values.max() ?: 0 }.max() ?: 0
+        get() = state.years.values.map{ it.values.maxOrNull() ?: 0 }.maxOrNull() ?: 0
 
     val mostKeystrokeDay: LocalDate?
         get(){
