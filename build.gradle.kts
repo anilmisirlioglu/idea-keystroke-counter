@@ -43,6 +43,11 @@ intellij {
     setPlugins(*platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty).toTypedArray())
 }
 
+changelog {
+    version = pluginVersion
+    groups = emptyList()
+}
+
 tasks {
     // Set the compatibility versions to 1.8
     withType<JavaCompile> {
