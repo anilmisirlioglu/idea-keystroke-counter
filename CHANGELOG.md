@@ -18,7 +18,7 @@
 - Dependencies - upgrade `org.jetbrains.intellij` to `0.7.2`
 - Dependencies - upgrade `org.jetbrains.changelog` to `1.1.2`
 
-## Fixed
+### Fixed
 - Not refreshing the UI when data is reset bug
 
 ## [1.0.0]
