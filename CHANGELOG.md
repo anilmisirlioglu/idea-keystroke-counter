@@ -1,9 +1,6 @@
 # Key Stroke Counter Changelog
 
 ## [Unreleased]
-### Changed
-- No changes.
-
 ## [1.1.0]
 ### Added
 - Daily keystroke goal notification
