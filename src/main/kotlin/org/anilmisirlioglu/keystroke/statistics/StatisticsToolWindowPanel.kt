@@ -86,6 +86,7 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
 
                     if(dialog == Messages.YES){
                         statistics.reset()
+                        e.project.run{ this@StatisticsToolWindowPanel.run() }
                     }
                 }
 
