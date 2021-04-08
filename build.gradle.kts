@@ -45,7 +45,10 @@ intellij {
 
 changelog {
     version = pluginVersion
-    groups = emptyList()
+    path = "${project.projectDir}/CHANGELOG.md"
+    header = closure { "[${pluginVersion}]" }
+    unreleasedTerm = "[Unreleased]"
+    groups = listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security")
 }
 
 tasks {
