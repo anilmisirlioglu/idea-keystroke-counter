@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.anilmisirlioglu.keystroke.idea-keystroke-counter</id>
     <name>Keystroke Counter</name>
-    <vendor email="misirlioglisamet@gmail.com" url="https://www.asena.xyz">Anıl Mısırlıoğlu</vendor>
+    <vendor email="misirlioglisamet@gmail.com" url="https://me.anxl.dev">Anıl Mısırlıoğlu</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
