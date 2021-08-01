@@ -1,6 +1,18 @@
 # Key Stroke Counter Changelog
 
 ## [Unreleased]
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+## [1.1.1]
 ### Fixed
 - The plugin now supports versions post 2021.2.
 
