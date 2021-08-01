@@ -1,6 +1,9 @@
 # Key Stroke Counter Changelog
 
 ## [Unreleased]
+### Fixed
+- The plugin now supports versions post 2021.2.
+
 ## [1.1.0]
 ### Added
 - Daily keystroke goal notification
