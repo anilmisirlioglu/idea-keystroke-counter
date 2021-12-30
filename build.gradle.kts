@@ -1,11 +1,10 @@
-import org.jetbrains.changelog.closure
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.32"
+    id("org.jetbrains.kotlin.jvm") version "1.6.0"
     id("org.jetbrains.intellij") version "0.7.2"
-    id("org.jetbrains.changelog") version "1.2.1"
+    id("org.jetbrains.changelog") version "1.3.0"
 }
 
 // Import variables from gradle.properties file
@@ -44,11 +43,11 @@ intellij {
 }
 
 changelog {
-    version = pluginVersion
-    path = "${project.projectDir}/CHANGELOG.md"
-    header = closure { "[${pluginVersion}]" }
-    unreleasedTerm = "[Unreleased]"
-    groups = listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security")
+    version.set(pluginVersion)
+    path.set("${project.projectDir}/CHANGELOG.md")
+    header.set("[${pluginVersion}]")
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
 }
 
 tasks {
@@ -69,7 +68,7 @@ tasks {
         untilBuild(pluginUntilBuild)
 
         pluginDescription(
-            closure {
+            {
                 File(projectDir, "README.md").readText().lines().run {
                     val start = "<!-- Plugin description start -->"
                     val end = "<!-- Plugin description end -->"
@@ -86,7 +85,7 @@ tasks {
 
         // Get the latest available change notes from the changelog file
         changeNotes(
-            closure {
+            {
                 changelog.getLatest().toHTML()
             }
         )
