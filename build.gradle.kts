@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.0"
-    id("org.jetbrains.intellij") version "0.7.2"
+    id("org.jetbrains.intellij") version "1.5.3"
     id("org.jetbrains.changelog") version "1.3.0"
 }
 
@@ -33,13 +33,13 @@ dependencies {
 }
 
 intellij {
-    pluginName = pluginName_
-    version = platformVersion
-    type = platformType
-    downloadSources = platformDownloadSources.toBoolean()
-    updateSinceUntilBuild = true
+    pluginName.set(pluginName_)
+    version.set(platformVersion)
+    type.set(platformType)
+    downloadSources.set(platformDownloadSources.toBoolean())
+    updateSinceUntilBuild.set(true)
 
-    setPlugins(*platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty).toTypedArray())
+    // setPlugins(*platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty).toTypedArray())
 }
 
 changelog {
@@ -63,44 +63,38 @@ tasks {
     }
 
     patchPluginXml {
-        version(pluginVersion)
-        sinceBuild(pluginSinceBuild)
-        untilBuild(pluginUntilBuild)
+        version.set(pluginVersion)
+        sinceBuild.set(pluginSinceBuild)
+        untilBuild.set(pluginUntilBuild)
 
-        pluginDescription(
-            {
-                File(projectDir, "README.md").readText().lines().run {
-                    val start = "<!-- Plugin description start -->"
-                    val end = "<!-- Plugin description end -->"
+        pluginDescription.set(
+            File(projectDir, "README.md").readText().lines().run {
+                val start = "<!-- Plugin description start -->"
+                val end = "<!-- Plugin description end -->"
 
-                    if (!containsAll(listOf(start, end))) {
-                        throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
-                    }
-                    subList(indexOf(start) + 1, indexOf(end))
-                }.joinToString("\n").run {
-                    markdownToHTML(this)
+                if (!containsAll(listOf(start, end))) {
+                    throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                 }
+                subList(indexOf(start) + 1, indexOf(end))
+            }.joinToString("\n").run {
+                markdownToHTML(this)
             }
         )
 
         // Get the latest available change notes from the changelog file
-        changeNotes(
-            {
-                changelog.getLatest().toHTML()
-            }
-        )
+        changeNotes.set(changelog.getLatest().toHTML())
     }
 
     runPluginVerifier {
-        ideVersions(pluginVerifierIdeVersions)
+        ideVersions.set(listOf(pluginVerifierIdeVersions))
     }
 
     publishPlugin {
         dependsOn("patchChangelog")
-        token(System.getenv("PUBLISH_TOKEN"))
+        token.set(System.getenv("PUBLISH_TOKEN"))
         // pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://jetbrains.org/intellij/sdk/docs/tutorials/build_system/deployment.html#specifying-a-release-channel
-        channels(pluginVersion.split('-').getOrElse(1) { "default" }.split('.').first())
+        channels.set(listOf(pluginVersion.split('-').getOrElse(1) { "default" }.split('.').first()))
     }
 }
