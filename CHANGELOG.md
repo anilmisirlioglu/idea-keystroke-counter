@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- The plugin now supports versions post 2022.1.
 
 ### Changed
 
