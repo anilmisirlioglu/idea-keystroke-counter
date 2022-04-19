@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.1.3]
+### Added
 - The plugin now supports versions post 2022.1.
 
 ### Changed
@@ -13,6 +26,7 @@
 ### Fixed
 
 ### Security
+
 ## [1.1.1]
 ### Fixed
 - The plugin now supports versions post 2021.2.
