@@ -25,32 +25,31 @@ import org.anilmisirlioglu.keystroke.utils.DateTimeUtils
 import java.awt.BorderLayout
 import javax.swing.*
 
-class StatisticsToolWindowPanel : Disposable, JPanel(){
+class StatisticsToolWindowPanel : Disposable, JPanel() {
 
-    private val jPanel = JBPanel<JBPanel<*>>().apply{
+    private val jPanel = JBPanel<JBPanel<*>>().apply {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
     }
+    private val statistics = StatisticsService.getInstance()
+    private val settings = SettingsService.getInstance()
 
-    init{
+    init {
         this.layout = BorderLayout()
         this.add(jPanel, BorderLayout.CENTER)
 
         this.run()
+        this.statistics.addCallback { this.run() }
     }
 
-    private val statistics = StatisticsService.instance
-
-    private val settings = SettingsService.instance
-
     private val toolbar: JComponent
-        get(){
+        get() {
             val refreshAction = object : AnAction(
                 MessageBundle.message("toolbar.action.overview.reload.statistics.title"),
                 MessageBundle.message("toolbar.action.overview.reload.statistics.description"),
                 AllIcons.Actions.Refresh
-            ){
-                override fun actionPerformed(e: AnActionEvent){
-                    e.project.run{ this@StatisticsToolWindowPanel.run() }
+            ) {
+                override fun actionPerformed(e: AnActionEvent) {
+                    e.project.run { this@StatisticsToolWindowPanel.run() }
                 }
 
                 override fun displayTextInToolbar(): Boolean = false
@@ -60,8 +59,8 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 MessageBundle.message("toolbar.action.overview.settings.title"),
                 MessageBundle.message("toolbar.action.overview.settings.description"),
                 AllIcons.General.GearPlain
-            ){
-                override fun actionPerformed(e: AnActionEvent){
+            ) {
+                override fun actionPerformed(e: AnActionEvent) {
                     ShowSettingsUtil.getInstance().showSettingsDialog(
                         e.project,
                         "Keystore Counter"
@@ -75,7 +74,7 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 MessageBundle.message("toolbar.action.overview.reset.statistics.title"),
                 MessageBundle.message("toolbar.action.overview.reset.statistics.description"),
                 AllIcons.General.Reset
-            ){
+            ) {
 
                 override fun actionPerformed(e: AnActionEvent) {
                     val dialog = Messages.showYesNoDialog(
@@ -84,15 +83,15 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                         Messages.getQuestionIcon()
                     )
 
-                    if(dialog == Messages.YES){
+                    if (dialog == Messages.YES) {
                         statistics.reset()
-                        e.project.run{ this@StatisticsToolWindowPanel.run() }
+                        e.project.run { this@StatisticsToolWindowPanel.run() }
                     }
                 }
 
             }
 
-            val group = DefaultActionGroup("main", true).apply{
+            val group = DefaultActionGroup("main", true).apply {
                 add(refreshAction)
                 addSeparator()
                 add(resetAction)
@@ -101,14 +100,14 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
 
             return ActionManager
                 .getInstance()
-                .createActionToolbar(ActionPlaces.TOOLBAR, group, true).apply{
+                .createActionToolbar(ActionPlaces.TOOLBAR, group, true).apply {
                     border = CustomLineBorder(CaptionPanel.CNT_ACTIVE_BORDER_COLOR, 0, 0, 1, 0)
                 }
                 .component
         }
 
     private val overview: FormBuilder
-        get(){
+        get() {
             val overviewTitledSeparator = TitledSeparator(
                 MessageBundle.message("toolbar.separator.overview")
             )
@@ -144,7 +143,7 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
             val mostKeystrokeDateLabel = JLabel(
                 toHTML(
                     MessageBundle.message("toolbar.label.overview.most.keystroke.date"),
-                    statistics.mostKeystrokeDay?.let{
+                    statistics.mostKeystrokeDay?.let {
                         DateTimeUtils.parse(it)
                     } ?: MessageBundle.message("toolbar.label.overview.insufficient.data")
                 )
@@ -162,25 +161,22 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 .addComponent(overviewTitledSeparator)
                 .addComponentToRightColumn(numberOfKeystrokeTodayLabel)
                 .addComponentToRightColumn(dailyTargetLabel)
-                .addComponentToRightColumn(statisticsResetDateLabel)
-                .addComponentToRightColumn(totalKeystrokeCountLabel)
-                .addComponentToRightColumn(mostKeystrokeDateLabel)
                 .addComponentToRightColumn(maxKeystrokeCountLabel)
+                .addComponentToRightColumn(mostKeystrokeDateLabel)
+                .addComponentToRightColumn(totalKeystrokeCountLabel)
+                .addComponentToRightColumn(statisticsResetDateLabel)
         }
 
     private val target: FormBuilder
-        get(){
-            val targetTitledSeparator = TitledSeparator(
-                MessageBundle.message("toolbar.separator.target")
-            )
+        get() {
+            val targetTitledSeparator = TitledSeparator(MessageBundle.message("toolbar.separator.target"))
 
-            var percentageOfDailyTarget = (statistics.numberOfKeystrokeToday.toDouble() * 100 / settings.dailyTarget) / 100
-            if (percentageOfDailyTarget > 1) percentageOfDailyTarget = 1.0
+            val percentageOfDailyTarget =
+                ((statistics.numberOfKeystrokeToday.toDouble() * 100 / settings.dailyTarget) / 100)
+                    .coerceAtMost(1.0)
 
-            val targetChart = Chart.buildDialChart(
-                MessageBundle.message("toolbar.separator.target"),
-                percentageOfDailyTarget
-            )
+            val targetChart =
+                Chart.buildDialChart(MessageBundle.message("toolbar.separator.target"), percentageOfDailyTarget)
 
             return FormBuilder
                 .createFormBuilder()
@@ -189,26 +185,22 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
         }
 
     private val analysis: FormBuilder
-        get(){
+        get() {
             val datasets = statistics.datasets
-
-            val analysisTitledSeparator = TitledSeparator(
-                MessageBundle.message("toolbar.separator.analysis")
-            )
-
+            val analysisTitledSeparator = TitledSeparator(MessageBundle.message("toolbar.separator.analysis"))
             val rangeOfDays = 1..7
+
             val weeklyStatisticsChart = Chart.buildXYChart(
                 MessageBundle.message("toolbar.chart.statistics.weekly"),
                 MessageBundle.message("toolbar.chart.statistics.days"),
                 MessageBundle.message("toolbar.chart.statistics.strokes.count"),
                 rangeOfDays.toList(),
                 datasets.weekly
-            ).apply{
+            ).apply {
                 val days = MessageBundle.message("days").split(',')
-                val xMarkMap = mutableMapOf<Any, Any>()
-                rangeOfDays.forEach{ xMarkMap[it] = days[it - 1] }
-
-                chart.setCustomXAxisTickLabelsMap(xMarkMap)
+                chart.setCustomXAxisTickLabelsFormatter { ind ->
+                    return@setCustomXAxisTickLabelsFormatter days[ind.toInt() - 1]
+                }
             }
 
             val monthlyStatisticsChart = Chart.buildCategoryChart(
@@ -226,12 +218,11 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
                 MessageBundle.message("toolbar.chart.statistics.strokes.count"),
                 rangeOfMonths.toList(),
                 datasets.yearly
-            ).apply{
+            ).apply {
                 val months = MessageBundle.message("months").split(',')
-                val xMarkMap = mutableMapOf<Any, Any>()
-                rangeOfMonths.forEach{ xMarkMap[it] = months[it - 1] }
-
-                chart.setCustomXAxisTickLabelsMap(xMarkMap)
+                chart.setCustomXAxisTickLabelsFormatter { ind ->
+                    return@setCustomXAxisTickLabelsFormatter months[ind.toInt() - 1]
+                }
             }
 
             return FormBuilder
@@ -253,19 +244,19 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
             .addComponentFillVertically(JPanel(), 0)
             .panel
 
-    private fun run(){
+    private fun run() {
         val task = object : Task.Backgroundable(
             null,
             MessageBundle.message("toolbar.tasks.reload.title")
-        ){
+        ) {
 
-            override fun run(indicator: ProgressIndicator){
-                ApplicationManager.getApplication().runReadAction{
-                    SwingUtilities.invokeLater{
+            override fun run(indicator: ProgressIndicator) {
+                ApplicationManager.getApplication().runReadAction {
+                    SwingUtilities.invokeLater {
                         this@StatisticsToolWindowPanel.deActive()
                     }
 
-                    SwingUtilities.invokeLater{
+                    SwingUtilities.invokeLater {
                         this@StatisticsToolWindowPanel.active()
                     }
                 }
@@ -281,23 +272,23 @@ class StatisticsToolWindowPanel : Disposable, JPanel(){
 
     private fun toHTML(text: String, value: Any): String = XmlStringUtil.wrapInHtml("<b>$text:</b> $value")
 
-    private fun buildContent(): JBScrollPane{
+    private fun buildContent(): JBScrollPane {
         add(toolbar, BorderLayout.NORTH)
 
-        return JBScrollPane(panel).apply{
+        return JBScrollPane(panel).apply {
             verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
             horizontalScrollBarPolicy = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
         }
     }
 
-    private fun active(){
+    private fun active() {
         this.jPanel.add(buildContent(), BorderLayout.CENTER)
     }
 
-    private fun deActive(){
+    private fun deActive() {
         this.jPanel.removeAll()
     }
 
-    override fun dispose(){}
+    override fun dispose() {}
 
 }
