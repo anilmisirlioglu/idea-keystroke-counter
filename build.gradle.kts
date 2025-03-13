@@ -2,8 +2,8 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.0"
-    id("org.jetbrains.intellij") version "1.5.3"
+    id("org.jetbrains.kotlin.jvm") version "1.9.25"
+    id("org.jetbrains.intellij") version "1.17.4"
     id("org.jetbrains.changelog") version "1.3.0"
 }
 
@@ -25,11 +25,10 @@ version = pluginVersion
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    implementation("org.knowm.xchart:xchart:3.6.5")
+    implementation("org.knowm.xchart:xchart:3.8.8")
 }
 
 intellij {
@@ -53,13 +52,11 @@ changelog {
 tasks {
     // Set the compatibility versions to 1.8
     withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
-    listOf("compileKotlin", "compileTestKotlin").forEach {
-        getByName<KotlinCompile>(it) {
-            kotlinOptions.jvmTarget = "1.8"
-        }
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
     }
 
     patchPluginXml {

@@ -8,48 +8,36 @@ import java.awt.Dimension
 import javax.swing.*
 
 // Simple settings form
-class SettingsComponent{
+class SettingsComponent {
 
-    private val settings = SettingsService.instance
+    private val settings = SettingsService.getInstance()
 
     /* Titles */
-    private val generalTitledSeparator = TitledSeparator(
-        MessageBundle.message("settings.separator.general")
-    )
+    private val generalTitledSeparator = TitledSeparator(MessageBundle.message("settings.separator.general"))
     private val settingsTitledSeparator = TitledSeparator("Settings")
-    private val keyboardTitledSeparator = TitledSeparator(
-        MessageBundle.message("settings.separator.keyboard")
-    )
+    private val keyboardTitledSeparator = TitledSeparator(MessageBundle.message("settings.separator.keyboard"))
 
     /* Checkboxes */
-    private val countOnlyWorkspaceCheckbox = JCheckBox(
-        MessageBundle.message("settings.checkbox.workspace")
-    )
-    private val allowFunctionKeysCheckbox = JCheckBox(
-        MessageBundle.message("settings.checkbox.keys.function")
-    )
-    private val allowCursorControlKeysCheckbox = JCheckBox(
-        MessageBundle.message("settings.checkbox.keys.cursor")
-    )
-    private val allowOtherKeysCheckbox = JCheckBox(
-        MessageBundle.message("settings.checkbox.keys.other")
-    )
+    private val updateOnEveryKeystrokeCheckbox =
+        JCheckBox(MessageBundle.message("settings.checkbox.updateAfterEveryKey"))
+    private val allowFunctionKeysCheckbox = JCheckBox(MessageBundle.message("settings.checkbox.keys.function"))
+    private val allowCursorControlKeysCheckbox = JCheckBox(MessageBundle.message("settings.checkbox.keys.cursor"))
+    private val allowOtherKeysCheckbox = JCheckBox(MessageBundle.message("settings.checkbox.keys.other"))
+
     private val allowTypingKeysCheckbox = JCheckBox(
         MessageBundle.message("settings.checkbox.keys.typing"),
         true
-    ).apply{
+    ).apply {
         isEnabled = false
     }
 
     /* Labels */
-    private val dailyTargetLabel = JLabel(
-        MessageBundle.message("settings.label.daily.target")
-    )
+    private val dailyTargetLabel = JLabel(MessageBundle.message("settings.label.daily.target"))
 
     /* Inputs */
     private val dailyTargetSpinner = JSpinner(
         SpinnerNumberModel(settings.dailyTarget, 100, Int.MAX_VALUE, 50)
-    ).apply{
+    ).apply {
         val dimension = Dimension(96, 30)
 
         maximumSize = dimension
@@ -58,32 +46,29 @@ class SettingsComponent{
     }
 
     /* Panels */
-    private val dailyTargetPanel = JPanel(HorizontalLayout(12)).apply{
-        add(dailyTargetLabel)
-        add(dailyTargetSpinner)
-    }
+    private val dailyTargetPanel = JPanel(HorizontalLayout(12))
+        .apply {
+            add(dailyTargetLabel)
+            add(dailyTargetSpinner)
+        }
 
-    val panel: JPanel
+    val panel: JPanel = FormBuilder.createFormBuilder()
+        .addComponent(generalTitledSeparator)
+        .addComponentToRightColumn(updateOnEveryKeystrokeCheckbox)
+        .addVerticalGap(10)
+        .addComponent(keyboardTitledSeparator)
+        .addComponentToRightColumn(allowTypingKeysCheckbox)
+        .addComponentToRightColumn(allowFunctionKeysCheckbox)
+        .addComponentToRightColumn(allowCursorControlKeysCheckbox)
+        .addComponentToRightColumn(allowOtherKeysCheckbox)
+        .addVerticalGap(10)
+        .addComponent(settingsTitledSeparator)
+        .addComponentToRightColumn(dailyTargetPanel)
+        .addComponentFillVertically(JPanel(), 0)
+        .panel
 
-    init{
-        panel = FormBuilder.createFormBuilder()
-            .addComponent(generalTitledSeparator)
-            .addComponentToRightColumn(countOnlyWorkspaceCheckbox)
-            .addVerticalGap(10)
-            .addComponent(keyboardTitledSeparator)
-            .addComponentToRightColumn(allowTypingKeysCheckbox)
-            .addComponentToRightColumn(allowFunctionKeysCheckbox)
-            .addComponentToRightColumn(allowCursorControlKeysCheckbox)
-            .addComponentToRightColumn(allowOtherKeysCheckbox)
-            .addVerticalGap(10)
-            .addComponent(settingsTitledSeparator)
-            .addComponentToRightColumn(dailyTargetPanel)
-            .addComponentFillVertically(JPanel(), 0)
-            .panel
-    }
-
-    fun apply(){
-        settings.isCountOnlyWorkspace = countOnlyWorkspaceCheckbox.isSelected
+    fun apply() {
+        settings.updateOnEveryKeystroke = updateOnEveryKeystrokeCheckbox.isSelected
         settings.dailyTarget = dailyTargetSpinner.value as Int
 
         settings.isAllowedOtherKeys = allowOtherKeysCheckbox.isSelected
@@ -91,8 +76,8 @@ class SettingsComponent{
         settings.isAllowedFunctionKeys = allowFunctionKeysCheckbox.isSelected
     }
 
-    fun reset(){
-        countOnlyWorkspaceCheckbox.isSelected = settings.isCountOnlyWorkspace
+    fun reset() {
+        updateOnEveryKeystrokeCheckbox.isSelected = settings.updateOnEveryKeystroke
         dailyTargetSpinner.value = settings.dailyTarget
 
         allowOtherKeysCheckbox.isSelected = settings.isAllowedOtherKeys
@@ -100,13 +85,11 @@ class SettingsComponent{
         allowCursorControlKeysCheckbox.isSelected = settings.isAllowedCursorControlKeys
     }
 
-    fun isModified(): Boolean{
-        return countOnlyWorkspaceCheckbox.isSelected != settings.isCountOnlyWorkspace ||
+    fun isModified(): Boolean {
+        return allowCursorControlKeysCheckbox.isSelected != settings.isAllowedCursorControlKeys ||
                 allowOtherKeysCheckbox.isSelected != settings.isAllowedOtherKeys ||
                 allowFunctionKeysCheckbox.isSelected != settings.isAllowedFunctionKeys ||
-                allowCursorControlKeysCheckbox.isSelected != settings.isAllowedCursorControlKeys ||
-                dailyTargetSpinner.value != settings.dailyTarget
-
+                dailyTargetSpinner.value != settings.dailyTarget ||
+                updateOnEveryKeystrokeCheckbox.isSelected != settings.updateOnEveryKeystroke
     }
-
 }

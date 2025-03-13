@@ -5,16 +5,16 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <application-components>
-        <component>
-            <implementation-class>org.anilmisirlioglu.keystroke.KeyboardListener</implementation-class>
-        </component>
-    </application-components>
+    <applicationListeners>
+        <listener class="org.anilmisirlioglu.keystroke.statistics.StatisticsWindowListener" topic="com.intellij.openapi.wm.ex.ToolWindowManagerListener"/>
+    </applicationListeners>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.statistics.StatisticsService"/>
 
         <applicationService serviceImplementation="org.anilmisirlioglu.keystroke.settings.SettingsService"/>
+
+        <ideEventQueueDispatcher implementation="org.anilmisirlioglu.keystroke.KeyboardListener"/>
 
         <applicationConfigurable
                 id="KeyStrokeConfiguration"

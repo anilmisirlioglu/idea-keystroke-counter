@@ -1,63 +1,48 @@
 package org.anilmisirlioglu.keystroke
 
-import com.intellij.openapi.Disposable
-import com.intellij.openapi.editor.impl.EditorComponentImpl
+import com.intellij.ide.IdeEventQueue
 import org.anilmisirlioglu.keystroke.settings.SettingsService
 import org.anilmisirlioglu.keystroke.statistics.StatisticsService
 import java.awt.AWTEvent
-import java.awt.Toolkit
-import java.awt.event.AWTEventListener
 import java.awt.event.KeyEvent
 
-class KeyboardListener : AWTEventListener, Disposable{
+class KeyboardListener : IdeEventQueue.EventDispatcher {
 
-    private val statistics = StatisticsService.instance
-    private val settings = SettingsService.instance
+    private val statistics = StatisticsService.getInstance()
+    private val settings = SettingsService.getInstance()
 
-    init{
-        Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.KEY_EVENT_MASK)
-    }
-
-    override fun eventDispatched(event: AWTEvent?){
-        if(event is KeyEvent && event.id == KeyEvent.KEY_RELEASED){
-            if(!settings.isCountOnlyWorkspace || event.component is EditorComponentImpl){
-                when{
-                    event.isTypingKey -> statistics.inc()
-                    settings.isAllowedFunctionKeys && event.isFunctionKey -> statistics.inc()
-                    settings.isAllowedCursorControlKeys && event.isCursorControlKey -> statistics.inc()
-                    settings.isAllowedOtherKeys -> statistics.inc()
-                }
+    override fun dispatch(e: AWTEvent): Boolean {
+        if (e is KeyEvent && e.id == KeyEvent.KEY_RELEASED) {
+            when {
+                e.isTypingKey -> statistics.inc()
+                settings.isAllowedFunctionKeys && e.isFunctionKey -> statistics.inc()
+                settings.isAllowedCursorControlKeys && e.isCursorControlKey -> statistics.inc()
+                settings.isAllowedOtherKeys -> statistics.inc()
             }
         }
-    }
-
-    override fun dispose(){
-        Toolkit.getDefaultToolkit().removeAWTEventListener(this)
+        return false
     }
 
     private val KeyEvent.isTypingKey: Boolean
-        get() = when(keyCode){
+        get() = when (keyCode) {
             KeyEvent.VK_UNDEFINED,
-            KeyEvent.VK_ESCAPE,
-            KeyEvent.VK_TAB,
-            KeyEvent.VK_SPACE,
-            KeyEvent.VK_DELETE,
-            KeyEvent.VK_BACK_SPACE,
-            KeyEvent.VK_ENTER -> false
+            KeyEvent.VK_TAB -> false
+
             else -> keyChar != KeyEvent.CHAR_UNDEFINED
         }
 
     private val KeyEvent.isCursorControlKey: Boolean
-        get() = when(keyCode){
+        get() = when (keyCode) {
             KeyEvent.VK_RIGHT,
             KeyEvent.VK_LEFT,
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN -> true
+
             else -> false
         }
 
     private val KeyEvent.isFunctionKey: Boolean
-        get() = when(keyCode){
+        get() = when (keyCode) {
             KeyEvent.VK_F1,
             KeyEvent.VK_F2,
             KeyEvent.VK_F3,
@@ -82,7 +67,7 @@ class KeyboardListener : AWTEventListener, Disposable{
             KeyEvent.VK_F22,
             KeyEvent.VK_F23,
             KeyEvent.VK_F24 -> true
+
             else -> false
         }
-
 }
