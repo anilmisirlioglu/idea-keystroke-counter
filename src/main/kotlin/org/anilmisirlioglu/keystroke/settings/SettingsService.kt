@@ -64,5 +64,4 @@ class SettingsService : PersistentStateComponent<Settings> {
             BitMask.delete(flag, state.keyboardFlags)
         }
     }
-
 }
