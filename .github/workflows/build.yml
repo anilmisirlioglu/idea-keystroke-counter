@@ -10,9 +10,9 @@
 name: Build
 on:
   push:
-    branches: [$default-branch]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [$default-branch]
+    branches: [ $default-branch ]
   workflow_dispatch:
 
 
@@ -137,8 +137,8 @@ jobs:
           name: plugin-artifact
           path: ./build/distributions/${{ needs.build.outputs.artifact }}
 
-#  # Verify built plugin using IntelliJ Plugin Verifier tool
-#  # Requires build job to be passed
+  #  # Verify built plugin using IntelliJ Plugin Verifier tool
+  #  # Requires build job to be passed
   verify:
     name: Verify
     needs: build
@@ -197,14 +197,14 @@ jobs:
   releaseDraft:
     name: Release Draft
     if: github.event_name != 'pull_request'
-    needs: [build] # [build, verify]
+    needs: [ build, verify ]
     runs-on: ubuntu-latest
     steps:
 
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v4
-#TODO come back and review this area
+      #TODO come back and review this area
       # Remove old release drafts by using the curl request for the available releases with draft flag
       - name: Remove Old Release Drafts
         env:
@@ -218,12 +218,11 @@ jobs:
       # Create new release draft - which is not publicly visible and requires manual acceptance
       - name: Create Release Draft
         id: createDraft
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v${{ needs.build.outputs.version }}
-          release_name: v${{ needs.build.outputs.version }}
+          name: ${{ needs.build.outputs.artifact }}
           body: ${{ needs.build.outputs.changelog }}
           draft: true
 
@@ -236,13 +235,11 @@ jobs:
       # Upload artifact as a release asset
       - name: Upload Release Asset
         id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-        uses: softprops/action-gh-release@v2
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-#          url: ${{ steps.upload-release-asset.outputs.url }}
-#          asset_path: ./${{ needs.build.outputs.artifact }}
-          name: ${{ needs.build.outputs.artifact }}
-#          asset_content_type: application/zip
+          upload_url: ${{ steps.createDraft.outputs.upload_url }}
+          asset_path: ./${{ needs.build.outputs.artifact }}
+          asset_name: ${{ needs.build.outputs.artifact }}
+          asset_content_type: application/zip
