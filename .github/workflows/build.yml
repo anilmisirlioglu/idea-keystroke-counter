@@ -13,6 +13,8 @@ on:
     branches: [$default-branch]
   pull_request:
     branches: [$default-branch]
+  workflow_dispatch:
+
 
 jobs:
   # Run Gradle Wrapper Validation Action to verify the wrapper's checksum
