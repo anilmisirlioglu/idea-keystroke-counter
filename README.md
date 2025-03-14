@@ -8,8 +8,8 @@ IDEA Keystroke Counter
 <!-- Plugin description start -->
 
 Keystroke Counter tracks your keystrokes on the keyboard and counts them 
-for you. When you set a daily limit, it shows how close you are to your 
-daily limit. At the same time it shows the keystrokes it counts with 
+for you. When you set a daily target, it shows how close you are to your 
+daily target. At the same time it shows the keystrokes it counts with 
 detailed visualized statistics. Allows you to customize the keys to count from the 
 settings. Supports most keyboards.
 
